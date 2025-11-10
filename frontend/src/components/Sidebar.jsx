@@ -1,110 +1,102 @@
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   Home,
-  LayoutDashboard,
-  MessageSquare,
-  Calendar,
-  Layers,
-  User,
+  BarChart3,
+  CheckSquare,
+  Bell,
   Settings,
+  LogOut,
+  ChevronDown
 } from "lucide-react";
 
 function Sidebar() {
-  const location = useLocation(); // to detect current active route
+  const location = useLocation();
+  const { logout } = useAuth();
 
   return (
-    <aside className="w-64 bg-gray-50 border-r border-gray-200 flex flex-col min-h-screen">
+    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col min-h-screen">
       {/* Logo / Header */}
-      <div className="flex items-center justify-between px-6 py-5 border-b">
-        <h2 className="text-xl font-semibold text-gray-800">Taskboard</h2>
-        <span className="text-xs bg-black text-white px-2 py-0.5 rounded">▼</span>
+      <div className="flex items-center justify-between px-6 py-6 border-b border-gray-100">
+        <div className="flex items-center">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+            <span className="text-white font-bold text-sm">TO</span>
+          </div>
+          <h2 className="text-lg font-bold text-gray-900">Task Orbit</h2>
+        </div>
+        <ChevronDown size={16} className="text-gray-400" />
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 px-6 py-6 space-y-8">
-        {/* Main Menu Section */}
-        <div>
-          <p className="text-sm text-gray-500 uppercase mb-3">Menu</p>
-          <ul className="space-y-2">
-            <li>
-              <Link
-                to="/"
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition ${
-                  location.pathname === "/"
-                    ? "bg-black text-white"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                <Home size={18} /> Dashboard
-              </Link>
-            </li>
+      <nav className="flex-1 px-4 py-6">
+        <ul className="space-y-1">
+          <li>
+            <Link
+              to="/"
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors ${
+                location.pathname === "/"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
+                  : "text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <Home size={20} /> Dashboard
+            </Link>
+          </li>
 
-            <li>
-              <Link
-                to="/kanban"
-                className={`flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition ${
-                  location.pathname === "/kanban"
-                    ? "bg-black text-white"
-                    : "text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                <LayoutDashboard size={18} /> Kanban Board
-              </Link>
-            </li>
+          <li>
+            <Link
+              to="/tasks"
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors ${
+                location.pathname === "/tasks"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
+                  : "text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <CheckSquare size={20} /> My tasks
+            </Link>
+          </li>
 
-            <li>
-              <Link
-                to="/chat"
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition"
-              >
-                <MessageSquare size={18} /> Chat
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/calendar"
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition"
-              >
-                <Calendar size={18} /> Calendar
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/template"
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition"
-              >
-                <Layers size={18} /> Template
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Account Section */}
-        <div>
-          <p className="text-sm text-gray-500 uppercase mb-3">Account</p>
-          <ul className="space-y-2">
-            <li>
-              <Link
-                to="/account"
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition"
-              >
-                <User size={18} /> Account
-              </Link>
-            </li>
-
-            <li>
-              <Link
-                to="/settings"
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition"
-              >
-                <Settings size={18} /> Settings
-              </Link>
-            </li>
-          </ul>
-        </div>
+          <li>
+            <Link
+              to="/notifications"
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors ${
+                location.pathname === "/notifications"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
+                  : "text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <Bell size={20} /> Notifications
+            </Link>
+          </li>
+        </ul>
       </nav>
+
+      {/* Bottom Navigation */}
+      <div className="px-4 py-4 border-t border-gray-100">
+        <ul className="space-y-1">
+          <li>
+            <Link
+              to="/settings"
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl font-medium transition-colors ${
+                location.pathname === "/settings"
+                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg"
+                  : "text-slate-700 hover:bg-slate-50"
+              }`}
+            >
+              <Settings size={20} /> Settings
+            </Link>
+          </li>
+          
+          <li>
+            <button 
+              onClick={logout}
+              className="flex items-center gap-3 px-3 py-3 rounded-xl font-medium text-slate-700 hover:bg-slate-50 transition-colors w-full text-left"
+            >
+              <LogOut size={20} /> Log out
+            </button>
+          </li>
+        </ul>
+      </div>
     </aside>
   );
 }

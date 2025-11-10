@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Root default styles for the whole app */
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #111827; /* Dark gray text */
-  background-color: #f9fafb; /* Light dashboard background */
-  text-rendering: optimizeLegibility;
+/* Performance and smooth scrolling optimizations */
+html {
+  scroll-behavior: smooth;
+}
+
+* {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Links */
-a {
-  color: inherit;
-  text-decoration: none;
+/* Optimized scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-/* Body styling to support dashboard layout */
-body {
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions for all interactive elements */
+.transition-all {
+  transition-property: all;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Test styles to verify Tailwind is working */
+.test-tailwind {
+  @apply bg-blue-500 text-white p-4;
+}
+
+/* Ensure box-sizing is inherited */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margins */
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd {
   margin: 0;
+}
+
+/* Set core body defaults */
+body {
   min-height: 100vh;
-  width: 100%;
-  background-color: #f9fafb;
-  font-family: 'Inter', sans-serif;
-  color: #111827;
-}
-
-/* Headings */
-h1, h2, h3, h4 {
-  font-weight: 600;
-  color: #111827;
-}
-
-/* Smooth hover transitions */
-button, a {
-  transition: all 0.2s ease;
+  line-height: 1.5;
 }

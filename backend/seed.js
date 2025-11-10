@@ -41,17 +41,21 @@ async function seed() {
 
     // 2) insert teams
     const teams = await Team.insertMany([
-      { name: 'Alpha Team', slug: 'alpha', description: 'Frontend team', createdBy: admin._id, members: [admin._id, john._id] },
-      { name: 'Beta Team', slug: 'beta', description: 'Backend team', createdBy: admin._id, members: [jane._id] }
+      { name: 'Marketing 02', slug: 'marketing02', description: 'Marketing team', createdBy: admin._id, members: [admin._id, john._id] },
+      { name: 'Operations', slug: 'operations', description: 'Operations team', createdBy: admin._id, members: [jane._id] },
+      { name: 'Customer Care', slug: 'customer-care', description: 'Customer service team', createdBy: admin._id, members: [admin._id, jane._id] },
+      { name: 'Retails', slug: 'retails', description: 'Retail team', createdBy: admin._id, members: [john._id] },
+      { name: 'People', slug: 'people', description: 'HR team', createdBy: admin._id, members: [jane._id, admin._id] },
+      { name: 'Development', slug: 'development', description: 'Dev team', createdBy: admin._id, members: [john._id, admin._id] }
     ]);
     console.log(`Inserted ${teams.length} teams`);
 
-    const [alpha, beta] = teams;
+    const [marketing02, operations, customerCare, retails, people, development] = teams;
 
     // 3) insert projects (owned by teams or users)
     const projects = await Project.insertMany([
-      { name: 'Website Redesign', slug: 'website-redesign', description: 'Revamp marketing site', ownerTeam: alpha._id },
-      { name: 'Auth Service', slug: 'auth-service', description: 'JWT & SSO', ownerTeam: beta._id },
+      { name: 'Website Redesign', slug: 'website-redesign', description: 'Revamp marketing site', ownerTeam: marketing02._id },
+      { name: 'Auth Service', slug: 'auth-service', description: 'JWT & SSO', ownerTeam: operations._id },
       { name: 'Personal Project', slug: 'personal', description: 'Owned by John', ownerUser: john._id }
     ]);
     console.log(`Inserted ${projects.length} projects`);
@@ -60,10 +64,106 @@ async function seed() {
 
     // 4) insert tasks (link to projects and assignees)
     const tasks = await Task.insertMany([
-      { project: website._id, title: 'Design hero section', description: 'Create mockups', assigneeUser: jane._id, reporter: admin._id, priority: 2 },
-      { project: website._id, title: 'Implement responsive nav', description: 'Mobile first', assigneeUser: john._id, reporter: admin._id },
-      { project: auth._id, title: 'Implement login endpoint', description: 'POST /api/login', assigneeUser: jane._id, reporter: admin._id },
-      { project: personal._id, title: 'Write README', description: 'Project documentation', assigneeUser: john._id, reporter: john._id }
+      { 
+        project: website._id, 
+        title: 'Finish monthly reporting', 
+        description: 'Complete monthly reports', 
+        assigneeUser: admin._id, 
+        reporter: admin._id, 
+        priority: 'High',
+        status: 'In progress',
+        dueText: 'Today',
+        assigneeTeam: marketing02._id,
+        tags: ['reporting', 'monthly']
+      },
+      { 
+        project: website._id, 
+        title: 'Contract signing', 
+        description: 'Review and sign contracts', 
+        assigneeUser: john._id, 
+        reporter: admin._id, 
+        priority: 'Medium',
+        status: 'In progress',
+        dueText: 'Today',
+        assigneeTeam: operations._id
+      },
+      { 
+        project: auth._id, 
+        title: 'Market overview keynote', 
+        description: 'Prepare presentation', 
+        assigneeUser: jane._id, 
+        reporter: admin._id, 
+        priority: 'High',
+        status: 'In progress',
+        dueText: 'Today',
+        assigneeTeam: customerCare._id
+      },
+      { 
+        project: personal._id, 
+        title: 'Brand proposal', 
+        description: 'Create brand guidelines', 
+        assigneeUser: jane._id, 
+        reporter: john._id, 
+        priority: 'High',
+        status: 'Not started',
+        dueText: 'Tomorrow',
+        assigneeTeam: marketing02._id
+      },
+      { 
+        project: auth._id, 
+        title: 'Social media review', 
+        description: 'Review social media content', 
+        assigneeUser: john._id, 
+        reporter: admin._id, 
+        priority: 'Medium',
+        status: 'In progress',
+        dueText: 'Tomorrow',
+        assigneeTeam: operations._id
+      },
+      { 
+        project: website._id, 
+        title: 'Report - Week 30', 
+        description: 'Weekly progress report', 
+        assigneeUser: admin._id, 
+        reporter: jane._id, 
+        priority: 'Low',
+        status: 'Not started',
+        dueText: 'Tomorrow',
+        assigneeTeam: operations._id
+      },
+      { 
+        project: personal._id, 
+        title: 'Order check-ins', 
+        description: 'Check order status', 
+        assigneeUser: john._id, 
+        reporter: admin._id, 
+        priority: 'Medium',
+        status: 'In progress',
+        dueText: 'Wednesday',
+        assigneeTeam: retails._id
+      },
+      { 
+        project: auth._id, 
+        title: 'HR reviews', 
+        description: 'Conduct HR reviews', 
+        assigneeUser: jane._id, 
+        reporter: john._id, 
+        priority: 'Medium',
+        status: 'Not started',
+        dueText: 'Wednesday',
+        assigneeTeam: people._id
+      },
+      { 
+        project: website._id, 
+        title: 'Report - Week 30', 
+        description: 'Final week report', 
+        assigneeUser: admin._id, 
+        reporter: jane._id, 
+        priority: 'Low',
+        status: 'Not started',
+        dueText: 'Friday',
+        assigneeTeam: development._id
+      }
     ]);
     console.log(`Inserted ${tasks.length} tasks`);
 
